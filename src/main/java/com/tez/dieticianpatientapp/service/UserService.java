@@ -1,0 +1,28 @@
+package com.tez.dieticianpatientapp.service;
+
+
+import com.tez.dieticianpatientapp.dto.UserDto;
+import com.tez.dieticianpatientapp.entities.User;
+import com.tez.dieticianpatientapp.exception.NotUniqueTcknException;
+import com.tez.dieticianpatientapp.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+@Service
+public class UserService {
+    @Autowired
+    UserRepository userRepository;
+
+    public ResponseEntity<UserDto> saveUser(User user){
+        try {
+            userRepository.save(user);
+        }
+        catch (DataIntegrityViolationException ex){
+            throw new NotUniqueTcknException();
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(new UserDto(user));
+    }
+}
