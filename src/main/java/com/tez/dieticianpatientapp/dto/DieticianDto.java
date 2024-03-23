@@ -10,7 +10,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class DieticianDto {
-    long id;
 
     String firstName;
 
@@ -19,7 +18,6 @@ public class DieticianDto {
     UserDto user;
 
     public DieticianDto(Dietician dietician){
-        id = dietician.getId();
         firstName = dietician.getFirstName();
         lastName = dietician.getLastName();
         user = new UserDto(dietician.getUser());
