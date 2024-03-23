@@ -2,12 +2,15 @@ package com.tez.dieticianpatientapp.entities;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.context.annotation.Lazy;
 
 @Table(name = "dietician")
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 public class Dietician {
 
     @Id

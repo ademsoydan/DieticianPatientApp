@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserService {
     @Autowired
@@ -25,4 +27,9 @@ public class UserService {
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(new UserDto(user));
     }
+
+    public Optional<User> getUserByTckn(String tckn) {
+        return userRepository.findByTckn(tckn);
+    }
+
 }

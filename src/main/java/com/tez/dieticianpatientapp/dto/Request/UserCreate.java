@@ -1,9 +1,7 @@
-package com.tez.dieticianpatientapp.dto.Requset;
+package com.tez.dieticianpatientapp.dto.Request;
 
 import com.tez.dieticianpatientapp.entities.User;
 import com.tez.dieticianpatientapp.utils.UserType;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 

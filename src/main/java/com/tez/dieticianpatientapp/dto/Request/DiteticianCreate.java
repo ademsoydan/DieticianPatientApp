@@ -1,13 +1,9 @@
-package com.tez.dieticianpatientapp.dto.Requset;
+package com.tez.dieticianpatientapp.dto.Request;
 
 import com.tez.dieticianpatientapp.entities.Dietician;
 import com.tez.dieticianpatientapp.entities.User;
 import com.tez.dieticianpatientapp.utils.UserType;
 import com.tez.dieticianpatientapp.validation.UniqueTckn;
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
