@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class DieticianService {
 
@@ -32,10 +34,9 @@ public class DieticianService {
         return ResponseEntity.status(HttpStatus.CREATED).body(new DieticianDto(dietician));
     }
 
-    public ResponseEntity<DieticianDto> getDieticianByTckn(String tckn){
+    public Dietician getDieticianByTckn(String tckn){
         User user = userService.getUserByTckn(tckn).orElseThrow(UserNotFoundException::new);
-        Dietician dietician = dieticianRepository.findByUserTckn(user.getTckn()).orElseThrow(UserNotFoundException::new);
-        return ResponseEntity.status(HttpStatus.OK).body(new DieticianDto(dietician));
+        return dieticianRepository.findByUserTckn(user.getTckn()).orElseThrow(UserNotFoundException::new);
     }
 
     public ResponseEntity<DieticianDto> getDieticianById(long id){

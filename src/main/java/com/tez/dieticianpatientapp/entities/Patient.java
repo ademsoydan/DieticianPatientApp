@@ -1,13 +1,20 @@
 package com.tez.dieticianpatientapp.entities;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.extern.apachecommons.CommonsLog;
 
-/*@Entity
+@Entity
 @Table(name = "patient")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Patient {
-    @Column(name = "tckn")
-    String tckn;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
 
     @Column(name = "first_name")
     String firstName;
@@ -15,10 +22,17 @@ public class Patient {
     @Column(name = "last_name")
     String lastName;
 
-    @Column(name = "daily_cal_intake")
-    int dailycalintake;
-
-    @OneToOne
-    @JoinColumn(name = "tckn", referencedColumnName = "tckn")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "tckn", referencedColumnName = "user_tckn")
     User user;
-}*/
+
+    @ManyToOne
+    @JoinColumn(name = "dietician_id")
+    Dietician dietician;
+
+    public Patient(String firstName, String lastName, User user) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.user = user;
+    }
+}

@@ -16,12 +16,11 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class UserDto {
-    Long id;
     String tckn;
     UserType userType;
 
     public UserDto(User user){
-        id = user.getId();
+
         tckn = user.getTckn();
         userType = user.getUserType();
     }

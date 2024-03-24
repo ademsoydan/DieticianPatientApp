@@ -11,6 +11,8 @@ import lombok.Setter;
 @AllArgsConstructor
 public class DieticianDto {
 
+    Long id;
+
     String firstName;
 
     String lastName;
@@ -18,6 +20,7 @@ public class DieticianDto {
     UserDto user;
 
     public DieticianDto(Dietician dietician){
+        id = dietician.getId();
         firstName = dietician.getFirstName();
         lastName = dietician.getLastName();
         user = new UserDto(dietician.getUser());
