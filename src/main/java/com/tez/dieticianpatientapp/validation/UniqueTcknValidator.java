@@ -18,6 +18,6 @@ public class UniqueTcknValidator implements  ConstraintValidator<UniqueTckn, Str
 
     @Override
     public boolean isValid(String s, ConstraintValidatorContext constraintValidatorContext) {
-        return userRepository.findByTckn(s) == null;
+        return userRepository.findByTckn(s).isEmpty();
     }
 }

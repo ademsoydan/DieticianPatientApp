@@ -14,6 +14,7 @@ import com.tez.dieticianpatientapp.service.PatientService;
 import com.tez.dieticianpatientapp.service.UserService;
 import com.tez.dieticianpatientapp.utils.JwtUtil;
 import com.tez.dieticianpatientapp.utils.UserType;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -66,7 +67,7 @@ public class AuthController {
     }
 
     @PostMapping("api/v1/register/dietician")
-    public ResponseEntity<AuthResponse> registerDietician(@RequestBody DieticianRegisterRequest registerRequest) {
+    public ResponseEntity<AuthResponse> registerDietician(@Valid @RequestBody DieticianRegisterRequest registerRequest) {
         User user = new User();
         user.setTckn(registerRequest.tckn());
         user.setPassword(passwordEncoder.encode(registerRequest.password()));
@@ -82,7 +83,7 @@ public class AuthController {
     }
 
     @PostMapping("api/v1/register/patient")
-    public ResponseEntity<AuthResponse> registerPatient(@RequestBody PatientRegisterRequest registerRequest) {
+    public ResponseEntity<AuthResponse> registerPatient(@Valid @RequestBody PatientRegisterRequest registerRequest) {
         User user = new User();
         user.setTckn(registerRequest.tckn());
         user.setPassword(passwordEncoder.encode(registerRequest.password()));
