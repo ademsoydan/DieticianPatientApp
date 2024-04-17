@@ -10,6 +10,7 @@ import com.tez.dieticianpatientapp.exception.PatientNotMatchDieticianException;
 import com.tez.dieticianpatientapp.exception.UserNotFoundException;
 import com.tez.dieticianpatientapp.repository.PatientRepository;
 import com.tez.dieticianpatientapp.security.UserDetailsImpl;
+import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,11 +23,11 @@ import java.util.Optional;
 
 @Service
 public class PatientService {
-    PatientRepository patientRepository;
+    private final PatientRepository patientRepository;
 
-    UserService userService;
+    private final UserService userService;
 
-    DieticianService dieticianService;
+    private final DieticianService dieticianService;
 
     public PatientService(PatientRepository patientRepository, UserService userService, DieticianService dieticianService) {
         this.patientRepository = patientRepository;
