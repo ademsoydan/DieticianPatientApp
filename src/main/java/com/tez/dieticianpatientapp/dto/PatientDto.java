@@ -16,12 +16,9 @@ public class PatientDto {
 
     String lastName;
 
-    UserDto user;
-
     public PatientDto(Patient patient) {
         this.id = patient.getId();
         this.firstName = patient.getFirstName();
         this.lastName = patient.getLastName();
-        this.user = new UserDto(patient.getUser());
     }
 }

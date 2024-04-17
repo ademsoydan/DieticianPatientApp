@@ -6,6 +6,7 @@ import com.tez.dieticianpatientapp.entities.Dietician;
 import com.tez.dieticianpatientapp.entities.Patient;
 import com.tez.dieticianpatientapp.entities.User;
 import com.tez.dieticianpatientapp.exception.NotUniqueTcknException;
+import com.tez.dieticianpatientapp.exception.PatientNotMatchDieticianException;
 import com.tez.dieticianpatientapp.exception.UserNotFoundException;
 import com.tez.dieticianpatientapp.repository.PatientRepository;
 import com.tez.dieticianpatientapp.security.UserDetailsImpl;
@@ -16,6 +17,7 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -58,5 +60,12 @@ public class PatientService {
         Patient patient = getPatientById(patientId);
         patient.setDietician(dietician);
         patientRepository.save(patient);
+    }
+
+    public List<Patient> getPatientsByDietician(){
+        UserDetailsImpl dieticianUser = (UserDetailsImpl)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Dietician dietician = dieticianService.getDieticianByTckn(dieticianUser.getUsername());
+        List<Patient> patients = patientRepository.findByDieticianId(dietician.getId());
+        return  patients;
     }
 }
