@@ -1,12 +1,15 @@
 package com.tez.dieticianpatientapp.controller;
 
+import com.tez.dieticianpatientapp.dto.PatientDto;
 import com.tez.dieticianpatientapp.entities.Patient;
 import com.tez.dieticianpatientapp.service.PatientService;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 public class PatientController {
@@ -18,13 +21,18 @@ public class PatientController {
     }
 
     @GetMapping("api/v1/patients")
-    public ResponseEntity<?> findPatientByTCKN(@RequestHeader("X-TCKN") String tckn) {
-        return ResponseEntity.status(HttpStatus.OK).body(patientService.getPatientByTckn(tckn));
+    public ResponseEntity<?> getPatient(@RequestHeader(value = "X-TCKN",required = false) String tckn, @RequestParam(value = "isDietician", required = false) Optional<Boolean> isDietician) {
+        if(isDietician.isPresent() && isDietician.get())
+        {
+           return ResponseEntity.ok(patientService.getPatientsByDietician().stream().map(PatientDto::new).collect(Collectors.toList()));
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(new PatientDto(patientService.getPatientByTckn(tckn)));
     }
 
-    @PostMapping("api/v1/patients")
-    public ResponseEntity<String> bindDietician(@RequestParam Long patientId){
-        patientService.bindDietician(patientId);
-        return ResponseEntity.ok("İşlem Başarılı");
+    @PutMapping("api/v1/patients/{id}")
+    public ResponseEntity<String> bindDietician(@PathVariable Long id){
+        patientService.bindDietician(id);
+        return ResponseEntity.ok(null);
     }
 }

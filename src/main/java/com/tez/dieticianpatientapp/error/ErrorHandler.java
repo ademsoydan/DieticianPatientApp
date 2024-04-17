@@ -1,6 +1,9 @@
 package com.tez.dieticianpatientapp.error;
 
+import com.tez.dieticianpatientapp.entities.User;
 import com.tez.dieticianpatientapp.exception.NotUniqueTcknException;
+import com.tez.dieticianpatientapp.exception.PatientNotMatchDieticianException;
+import com.tez.dieticianpatientapp.exception.UserNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +18,7 @@ import java.util.stream.Collectors;
 
 @RestControllerAdvice
 public class ErrorHandler {
-    @ExceptionHandler({NotUniqueTcknException.class, MethodArgumentNotValidException.class, AuthenticationException.class})
+    @ExceptionHandler({NotUniqueTcknException.class, MethodArgumentNotValidException.class, AuthenticationException.class, UserNotFoundException.class, PatientNotMatchDieticianException.class})
     ResponseEntity<ApiError> handleException(Exception exception, HttpServletRequest request){
         HttpStatus status = HttpStatus.BAD_REQUEST;
         ApiError apiError = new ApiError();
