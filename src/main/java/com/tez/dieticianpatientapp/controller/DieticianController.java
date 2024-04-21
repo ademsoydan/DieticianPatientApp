@@ -26,9 +26,9 @@ public class DieticianController {
         return ResponseEntity.ok(new DieticianDto(dieticianService.getDieticianById(id)));
     }
 
-    @GetMapping("/{dieticianId}/patients")
-    public ResponseEntity<List<PatientDto>> getPatientsByDietician(@PathVariable("dieticianId") Long dieticianId) {
-        List<Patient> patients = patientService.getPatientsByDietician(dieticianId);
+    @GetMapping("api/v1/dieticians/patients")
+    public ResponseEntity<List<PatientDto>> getPatientsByDietician() {
+        List<Patient> patients = patientService.getPatientsByDietician();
         List<PatientDto> patientDtos = patients.stream()
                 .map(PatientDto::new)
                 .collect(Collectors.toList());
