@@ -63,9 +63,8 @@ public class PatientService {
         patientRepository.save(patient);
     }
 
-    public List<Patient> getPatientsByDietician(){
-        UserDetailsImpl dieticianUser = (UserDetailsImpl)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Dietician dietician = dieticianService.getDieticianByTckn(dieticianUser.getUsername());
+    public List<Patient> getPatientsByDietician(long dieticianId){
+        Dietician dietician = dieticianService.getDieticianById(dieticianId);
         List<Patient> patients = patientRepository.findByDieticianId(dietician.getId());
         return  patients;
     }

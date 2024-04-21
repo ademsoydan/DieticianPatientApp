@@ -21,12 +21,7 @@ public class PatientController {
     }
 
     @GetMapping("api/v1/patients")
-    public ResponseEntity<?> getPatient(@RequestHeader(value = "X-TCKN",required = false) String tckn, @RequestParam(value = "isDietician", required = false) Optional<Boolean> isDietician) {
-        if(isDietician.isPresent() && isDietician.get())
-        {
-           return ResponseEntity.ok(patientService.getPatientsByDietician().stream().map(PatientDto::new).collect(Collectors.toList()));
-        }
-
+    public ResponseEntity<?> getPatient(@RequestHeader(value = "X-TCKN",required = false) String tckn) {
         return ResponseEntity.status(HttpStatus.OK).body(new PatientDto(patientService.getPatientByTckn(tckn)));
     }
 

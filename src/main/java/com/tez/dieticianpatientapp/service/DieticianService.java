@@ -39,8 +39,7 @@ public class DieticianService {
         return dieticianRepository.findByUserTckn(user.getTckn()).orElseThrow(UserNotFoundException::new);
     }
 
-    public ResponseEntity<DieticianDto> getDieticianById(long id){
-        Dietician dietician = dieticianRepository.findById(id).orElseThrow(UserNotFoundException::new);
-        return ResponseEntity.status(HttpStatus.OK).body(new DieticianDto(dietician));
+    public Dietician getDieticianById(long id){
+        return dieticianRepository.findById(id).orElseThrow(UserNotFoundException::new);
     }
 }
