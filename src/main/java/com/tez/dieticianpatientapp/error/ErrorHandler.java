@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestControllerAdvice
@@ -25,8 +26,9 @@ public class ErrorHandler {
         apiError.setPath(request.getRequestURI());
         apiError.setMessage(exception.getMessage());
         if(exception instanceof MethodArgumentNotValidException){
-            apiError.setMessage("Validasyon Hatası");
             var validationErrors = ((MethodArgumentNotValidException)exception).getBindingResult().getFieldErrors().stream().collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage, (existing, replacing) -> existing));
+            Map.Entry<String, String> firstEntry = validationErrors.entrySet().iterator().next();
+            apiError.setMessage(firstEntry.getValue());
             apiError.setValidationErrors(validationErrors);
         }
         else if(exception instanceof AuthenticationException){
