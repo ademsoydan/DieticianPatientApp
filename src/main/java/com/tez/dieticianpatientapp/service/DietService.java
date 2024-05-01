@@ -32,7 +32,7 @@ public class DietService {
         Patient patient = patientService.getPatientById(dietCreate.patientId());
         if(patient.getDietician() == null || !Objects.equals(patient.getDietician().getId(), dietician.getId()))
             throw new PatientNotMatchDieticianException();
-        List<Double> calValues = calculateValues(dietCreate.totalCal());
+        List<Double> calValues = convertTotalCaltoGramValues(dietCreate.totalCal());
         Diet diet = new Diet(patient,dietician,dietCreate.totalCal(), calValues.get(0), calValues.get(1), calValues.get(2));
         repository.save(diet);
     }
@@ -49,18 +49,29 @@ public class DietService {
         dbDiet.setIntakeFat(dbDiet.getIntakeFat() + updateDiet.intakeFat());
         dbDiet.setIntakeProtein(dbDiet.getIntakeProtein() + updateDiet.intakeProtein());
         dbDiet.setIntakeCarbohydrate(dbDiet.getIntakeCarbohydrate() + updateDiet.intakeCarbohydrate());
+        dbDiet.setIntakeCal(dbDiet.getIntakeCal() + updateDiet.intakeCal());
         repository.save(dbDiet);
     }
 
-    private List<Double> calculateValues(long totalCal){
+    private List<Double> convertTotalCaltoGramValues(long totalCal){
         List<Double> calList = new ArrayList<>();
-        double intakeCarbohydrate = (double) totalCal /3;
-        double intakeFat = (double) totalCal /3;
-        double intakeProtein = (double) totalCal /3;
+        // Genel besin dağılımı oranları (Yüzde cinsinden)
+        final double CARBOHYDRATE_RATIO = 0.5; // Karbonhidrat oranı
+        final double PROTEIN_RATIO = 0.3;      // Protein oranı
+        final double FAT_RATIO = 0.2;          // Yağ oranı
+
+        // Günlük alınması gereken karbonhidrat miktarını hesapla
+        double intakeCarbohydrate = totalCal * CARBOHYDRATE_RATIO / 4; // 1 gram karbonhidrat 4 kaloriye denk gelir
+
+        // Günlük alınması gereken protein miktarını hesapla
+        double intakeProtein = totalCal * PROTEIN_RATIO / 4; // 1 gram protein 4 kaloriye denk gelir
+
+        // Günlük alınması gereken yağ miktarını hesapla
+        double intakeFat = totalCal * FAT_RATIO / 9; // 1 gram yağ 9 kaloriye denk gelir
         calList.add(intakeCarbohydrate);
         calList.add(intakeFat);
         calList.add(intakeProtein);
-        return  calList;
+        return calList;
     }
 
     public Diet findByPatientId(long patientId){

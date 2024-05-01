@@ -29,6 +29,7 @@ public class Diet {
 
 
     double totalCal;
+    double intakeCal;
 
     double totalCarbohydrate;
     double totalFat;
@@ -38,6 +39,7 @@ public class Diet {
     double intakeFat;
     double intakeProtein;
     LocalDate dietDate;
+
 
     public Diet(Patient patient, Dietician dietician, double totalCal, double totalCarbohydrate, double totalFat, double totalProtein) {
         this.patient = patient;
