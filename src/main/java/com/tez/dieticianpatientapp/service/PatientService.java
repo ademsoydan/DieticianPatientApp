@@ -55,10 +55,10 @@ public class PatientService {
         return  patient.get();
     }
 
-    public void bindDietician(Long patientId){
+    public void bindDietician(String patientId){
         UserDetailsImpl dieticianUser = (UserDetailsImpl)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Dietician dietician = dieticianService.getDieticianByTckn(dieticianUser.getUsername());
-        Patient patient = getPatientById(patientId);
+        Patient patient = getPatientByTckn(patientId);
         patient.setDietician(dietician);
         patientRepository.save(patient);
     }

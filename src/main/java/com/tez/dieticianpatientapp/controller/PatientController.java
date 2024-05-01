@@ -26,7 +26,7 @@ public class PatientController {
     }
 
     @PutMapping("api/v1/patients/{id}")
-    public ResponseEntity<String> bindDietician(@PathVariable Long id){
+    public ResponseEntity<String> bindDietician(@PathVariable String id){
         patientService.bindDietician(id);
         return ResponseEntity.ok(null);
     }
