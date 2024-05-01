@@ -15,6 +15,7 @@ public class DietDto{
     long dietId;
 
     double totalCal;
+    double intakeCal;
 
     double totalCarbohydrate;
     double totalFat;
@@ -35,5 +36,6 @@ public class DietDto{
          intakeFat = diet.getIntakeFat();
          intakeProtein = diet.getIntakeProtein();
          dietDate = diet.getDietDate();
+         intakeCal = diet.getIntakeCal();
     }
 }
