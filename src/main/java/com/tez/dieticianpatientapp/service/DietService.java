@@ -32,9 +32,18 @@ public class DietService {
         Patient patient = patientService.getPatientById(dietCreate.patientId());
         if(patient.getDietician() == null || !Objects.equals(patient.getDietician().getId(), dietician.getId()))
             throw new PatientNotMatchDieticianException();
+        var existingDiet = getDiet(dietCreate.patientId());
         List<Double> calValues = convertTotalCaltoGramValues(dietCreate.totalCal());
-        Diet diet = new Diet(patient,dietician,dietCreate.totalCal(), calValues.get(0), calValues.get(1), calValues.get(2));
-        repository.save(diet);
+        if(existingDiet !=null){
+            existingDiet.setTotalCal(dietCreate.totalCal());
+            existingDiet.setTotalCarbohydrate(calValues.get(0));
+            existingDiet.setTotalFat(calValues.get(1));
+            existingDiet.setTotalProtein(calValues.get(2));
+            repository.save(existingDiet);
+        }else{
+            Diet diet = new Diet(patient,dietician,dietCreate.totalCal(), calValues.get(0), calValues.get(1), calValues.get(2));
+            repository.save(diet);
+        }
     }
 
     public Diet getDiet(long patientId){
